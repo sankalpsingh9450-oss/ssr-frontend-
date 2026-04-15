@@ -115,17 +115,16 @@ export function useFormSubmit(endpoint) {
         body: JSON.stringify(data),
       })
       const result = await res.json()
-      if (result.success) {
+      if (res.ok && result.success) {
         setSuccess(true)
         // Track Meta Pixel lead event
         if (window.fbq) window.fbq('track', 'Lead', { content_name: endpoint })
       } else {
-        setError(result.message || 'Something went wrong')
+        setError(result.message || result.detail || 'Something went wrong')
       }
     } catch (err) {
-      // If backend is not running, still show success for demo
-      console.warn('API not available, showing demo success:', err.message)
-      setSuccess(true)
+      console.warn('API request failed:', err.message)
+      setError('We could not submit your request right now. Please try again.')
     } finally {
       setLoading(false)
     }
