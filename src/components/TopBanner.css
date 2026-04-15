@@ -1,0 +1,77 @@
+.top-banner {
+  background: linear-gradient(90deg, var(--navy-900), var(--navy-700), var(--blue-500));
+  color: var(--white);
+  position: relative;
+  z-index: 1001;
+  overflow: hidden;
+}
+.top-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,.02) 40px,
+    rgba(255,255,255,.02) 80px
+  );
+}
+.top-banner-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 40px 10px 20px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+.top-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.top-banner-text strong {
+  color: var(--gold-400);
+}
+.top-banner-emoji {
+  font-size: 15px;
+}
+.top-banner-btn {
+  background: var(--gold-500);
+  color: var(--navy-900);
+  border: none;
+  padding: 4px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease-out);
+  white-space: nowrap;
+}
+.top-banner-btn:hover {
+  background: var(--gold-300);
+  transform: translateY(-1px);
+}
+.top-banner-close {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.5);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color var(--duration);
+}
+.top-banner-close:hover {
+  color: var(--white);
+}
+
+@media (max-width: 600px) {
+  .top-banner-inner { font-size: 12px; padding: 8px 36px 8px 12px; }
+}

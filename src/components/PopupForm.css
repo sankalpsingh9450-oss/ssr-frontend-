@@ -1,0 +1,111 @@
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.popup {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+.popup-header {
+  background: linear-gradient(135deg, var(--navy-900), var(--navy-800));
+  padding: 28px 32px;
+  position: relative;
+}
+.popup-header h3 {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+}
+.popup-header p {
+  color: rgba(255,255,255,.55);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.popup-free-tag {
+  position: absolute;
+  top: 20px;
+  right: 56px;
+  background: var(--green-500);
+  color: var(--white);
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.popup-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: rgba(255,255,255,.7);
+  font-size: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration);
+}
+.popup-close:hover {
+  background: rgba(255,255,255,.2);
+  color: var(--white);
+}
+.popup-body {
+  padding: 24px 32px 32px;
+}
+.popup-privacy {
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 12px;
+}
+.popup-success {
+  text-align: center;
+  padding: 24px 0;
+}
+.popup-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-500), #34d399);
+  color: var(--white);
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.popup-success h4 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.popup-success p {
+  color: var(--gray-500);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 520px) {
+  .popup-header { padding: 24px 20px; }
+  .popup-body { padding: 20px; }
+  .popup-free-tag { top: 14px; right: 48px; }
+}

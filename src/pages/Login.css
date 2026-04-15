@@ -1,0 +1,105 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--navy-950), var(--navy-800));
+  padding: 24px;
+}
+.login-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-xl);
+}
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.login-logo-icon {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-300));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--navy-900); font-size: 16px;
+}
+.login-card h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.login-sub {
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+.login-google-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: var(--font-body);
+  cursor: pointer;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all var(--duration);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+.login-google-btn:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-300);
+}
+.login-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  color: var(--gray-400);
+  font-size: 12px;
+}
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gray-200);
+}
+.login-divider span { padding: 0 14px; }
+.login-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--gray-500);
+}
+.login-switch button {
+  background: none;
+  border: none;
+  color: var(--blue-500);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: var(--font-body);
+}
+.login-back {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  color: var(--gray-400);
+  font-size: 12px;
+  transition: color var(--duration);
+}
+.login-back:hover { color: var(--gray-600); }
+
+@media (max-width: 480px) {
+  .login-card { padding: 32px 24px; }
+}

@@ -1,0 +1,28 @@
+.scroll-top-btn {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 800;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy-900);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,.15);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration), transform var(--duration);
+}
+.scroll-top-btn:hover {
+  background: var(--gold-500);
+  color: var(--navy-900);
+  transform: scale(1.1);
+}
+@media (max-width: 640px) {
+  .scroll-top-btn { left: 14px; bottom: 14px; width: 40px; height: 40px; font-size: 16px; }
+}
