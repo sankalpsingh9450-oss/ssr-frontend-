@@ -4,8 +4,15 @@ import { useScrollReveal, useFormSubmit } from '../hooks'
 import './Contact.css'
 import './Services.css'
 
+const RESPONSE_PROMISES = [
+  'WhatsApp-first support for urgent enquiries',
+  'CRM-backed lead capture and follow-up',
+  'Clear routing for quote, property, and sourcing briefs',
+]
+
 export default function Contact() {
   const [ref, vis] = useScrollReveal()
+  const [promiseRef, promiseVis] = useScrollReveal()
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
   const { submit, loading, success, reset } = useFormSubmit('/contact/')
 
@@ -18,10 +25,37 @@ export default function Contact() {
   return (
     <>
       <section className="page-hero">
-        <div className="container page-hero-content">
-          <div className="section-label">Get In Touch</div>
+        <div className="container page-hero-shell">
+          <div className="page-hero-content">
+            <div className="section-label">Get In Touch</div>
           <h1>Contact Us</h1>
-          <p>Whether you're planning a project, searching for property, or need materials — we're here for you.</p>
+            <p>Whether you're planning a project, searching for property, or sourcing materials, the contact experience should feel premium, direct, and reliable.</p>
+            <div className="page-hero-tags">
+              <span>Contact</span>
+              <span>WhatsApp</span>
+              <span>HubSpot Ready</span>
+            </div>
+          </div>
+          <div className="page-hero-brand-card">
+            <img src={SITE.logo} alt="SSR Group Civil logo" />
+            <div className="page-hero-brand-copy">
+              <span>Lead Handling</span>
+              <p>Every serious enquiry should move through one clear contact channel with better confidence and less friction.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section contact-promise-section">
+        <div className="container">
+          <div ref={promiseRef} className={`contact-promise-grid reveal ${promiseVis ? 'visible' : ''}`}>
+            {RESPONSE_PROMISES.map((item) => (
+              <article key={item} className="contact-promise-card">
+                <span>Response Promise</span>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -31,7 +65,7 @@ export default function Contact() {
             {/* Info Card */}
             <div className="contact-info-card">
               <h3>Contact Information</h3>
-              <p className="contact-info-sub">Reach out to us through any of these channels.</p>
+              <p className="contact-info-sub">Reach out through the channel that matches your urgency. WhatsApp is best for the fastest response.</p>
               {[
                 { icon: '👤', label: 'Contact Person', value: SITE.founder },
                 { icon: '📧', label: 'Email', value: SITE.email },
@@ -48,7 +82,7 @@ export default function Contact() {
                 </div>
               ))}
               <a className="btn btn-gold btn-full" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16 }}>
-                💬 Chat on WhatsApp
+                Chat on WhatsApp
               </a>
             </div>
 
@@ -58,12 +92,13 @@ export default function Contact() {
                 <div className="contact-success">
                   <div className="contact-success-icon">✓</div>
                   <h3>Message Sent!</h3>
-                  <p>Thank you for reaching out. We'll get back to you within 2 hours.</p>
+                  <p>Thank you for reaching out. Your enquiry is now inside the live lead flow and the team will get back to you shortly.</p>
                   <button className="btn btn-navy" onClick={reset}>Send Another</button>
                 </div>
               ) : (
                 <>
                   <h3>Send a Message</h3>
+                  <p className="contact-form-sub">Use this form for construction, property, sourcing, or general project briefs. The better the detail, the faster the response.</p>
                   <form onSubmit={handleSubmit}>
                     <div className="form-row">
                       <div className="form-group">
