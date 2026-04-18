@@ -10,15 +10,22 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-about">
             <div className="footer-logo">
-              <div className="footer-logo-icon">SSR</div>
+              <div className="footer-logo-icon">
+                <img src={SITE.logo} alt="SSR Group Civil logo" />
+              </div>
               <div>
                 <span className="footer-brand">{SITE.name}</span>
                 <span className="footer-tagline">{SITE.tagline}</span>
               </div>
             </div>
             <p className="footer-desc">
-              Building excellence through transparent pricing, premium materials, and unwavering commitment to quality.
+              Premium engineering, construction, property advisory, and sourcing for clients who want precision, trust, and execution without the usual chaos.
             </p>
+            <div className="footer-proof-strip">
+              <span>Delhi NCR Focus</span>
+              <span>Free BOQ Support</span>
+              <span>HubSpot Lead Sync</span>
+            </div>
             <div className="footer-contact-lines">
               <p>{SITE.address}</p>
               <p>{SITE.phone}</p>
@@ -37,13 +44,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="footer-heading">Quick Links</h4>
+            <h4 className="footer-heading">Explore</h4>
             <Link to="/about" className="footer-link">About Us</Link>
             <Link to="/contact" className="footer-link">Contact Us</Link>
-            <Link to="/login" className="footer-link">Login / Register</Link>
-            <Link to="/profile" className="footer-link">My Profile</Link>
-            <a href="#" className="footer-link">Free Quotation</a>
-            <a href="#" className="footer-link">Partner With Us</a>
+            <Link to="/services" className="footer-link">Project Services</Link>
+            <a href="#contact" className="footer-link">Request Callback</a>
+            <a href="#cta" className="footer-link">Free Quotation</a>
+            <a href="#materials" className="footer-link">Material Sourcing</a>
           </div>
 
           <div>
@@ -57,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {SITE.name}. Built for premium engineering, construction, and development leads.</p>
           <div className="footer-social">
             {[
               { href: SOCIAL.instagram, icon: <FaInstagram /> },

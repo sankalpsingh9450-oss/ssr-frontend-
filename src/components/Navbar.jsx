@@ -20,7 +20,9 @@ export default function Navbar({ onQuoteClick }) {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-inner container">
         <Link to="/" className="navbar-logo" aria-label="SSR Group Home">
-          <div className="navbar-logo-icon">SSR</div>
+          <div className="navbar-logo-icon">
+            <img src={SITE.logo} alt="SSR Group Civil logo" />
+          </div>
           <div className="navbar-logo-text">
             <span className="navbar-brand">{SITE.name}</span>
             <span className="navbar-tagline">{SITE.tagline}</span>
@@ -47,9 +49,8 @@ export default function Navbar({ onQuoteClick }) {
               {link.label}
             </Link>
           ))}
-          <Link to="/login" className="navbar-link">Login</Link>
           <button className="btn btn-gold btn-sm navbar-cta" onClick={onQuoteClick}>
-            Free Quote
+            Free BOQ
           </button>
         </div>
       </div>

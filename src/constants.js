@@ -4,7 +4,7 @@
 
 export const SITE = {
   name: 'SSR Group',
-  tagline: 'Construction & Real Estate',
+  tagline: 'Engineering • Construction • Development',
   phone: '+91-8796138550',
   phoneRaw: '918796138550',
   email: 'info@ssrgroupcivil.in',
@@ -12,6 +12,7 @@ export const SITE = {
   hours: 'Mon — Sat: 9:00 AM — 7:00 PM',
   founder: 'Sankalp Singh Rajput',
   domain: 'ssrgroupcivil.in',
+  logo: '/ssr-logo-premium.png',
 }
 
 export const WHATSAPP_URL = `https://wa.me/${SITE.phoneRaw}?text=Hi%20SSR%20Group!`

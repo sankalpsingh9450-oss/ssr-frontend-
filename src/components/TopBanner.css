@@ -1,9 +1,12 @@
 .top-banner {
-  background: linear-gradient(90deg, var(--navy-900), var(--navy-700), var(--blue-500));
+  background:
+    linear-gradient(90deg, rgba(7,12,18,.98), rgba(11,18,28,.96)),
+    linear-gradient(90deg, rgba(214,184,112,.12), transparent 30%, rgba(214,184,112,.08));
   color: var(--white);
   position: relative;
   z-index: 1001;
   overflow: hidden;
+  border-bottom: 1px solid rgba(214,184,112,.14);
 }
 .top-banner::before {
   content: '';
@@ -12,9 +15,9 @@
   background: repeating-linear-gradient(
     90deg,
     transparent,
-    transparent 40px,
-    rgba(255,255,255,.02) 40px,
-    rgba(255,255,255,.02) 80px
+    transparent 46px,
+    rgba(255,255,255,.03) 46px,
+    rgba(255,255,255,.03) 92px
   );
 }
 .top-banner-inner {
@@ -24,8 +27,9 @@
   justify-content: center;
   gap: 12px;
   padding: 10px 40px 10px 20px;
-  font-size: 13px;
+  font-size: 12px;
   flex-wrap: wrap;
+  letter-spacing: .4px;
 }
 .top-banner-text {
   display: flex;
@@ -33,19 +37,21 @@
   gap: 6px;
 }
 .top-banner-text strong {
-  color: var(--gold-400);
+  color: var(--gold-300);
 }
 .top-banner-emoji {
-  font-size: 15px;
+  font-size: 13px;
+  color: var(--gold-300);
 }
 .top-banner-btn {
-  background: var(--gold-500);
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-300));
   color: var(--navy-900);
   border: none;
-  padding: 4px 14px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: .5px;
   cursor: pointer;
   transition: all var(--duration) var(--ease-out);
   white-space: nowrap;
