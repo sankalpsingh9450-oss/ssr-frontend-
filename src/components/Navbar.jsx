@@ -214,9 +214,7 @@ export default function Navbar({ onQuoteClick }) {
       <header className="site-header">
         <div className="container site-header__inner">
           <Link to="/" className="site-header__brand" aria-label="SSR Group Home">
-            <div className="site-header__brand-mark">
-              <img src={SITE.logo} alt="SSR Group Civil logo" />
-            </div>
+            <img className="site-header__brand-mark" src={SITE.logo} alt="SSR Group Civil logo" />
             <div className="site-header__brand-copy">
               <span className="site-header__name">{SITE.name}</span>
               <span className="site-header__tagline">{SITE.tagline}</span>

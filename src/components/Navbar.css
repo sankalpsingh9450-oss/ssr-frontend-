@@ -22,14 +22,10 @@
 }
 
 .site-header__brand-mark {
-  width: 40px;
-  height: 40px;
+  display: block;
+  width: auto;
+  height: 42px;
   flex-shrink: 0;
-}
-
-.site-header__brand-mark img {
-  width: 100%;
-  height: 100%;
   object-fit: contain;
 }
 
@@ -216,6 +212,10 @@
 @media (max-width: 767px) {
   .site-header {
     height: var(--header-mobile);
+  }
+
+  .site-header__brand-mark {
+    height: 36px;
   }
 
   .site-header__tagline {

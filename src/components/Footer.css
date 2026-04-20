@@ -17,7 +17,7 @@
 }
 
 .site-footer__brand img {
-  width: 48px;
+  width: auto;
   height: 48px;
   object-fit: contain;
 }

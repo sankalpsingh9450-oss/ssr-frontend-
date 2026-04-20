@@ -14,7 +14,7 @@ export const SITE = {
   hours: 'Mon — Sat: 9:00 AM — 7:00 PM',
   founder: 'Sankalp Singh Rajput',
   domain: 'ssrgroupcivil.in',
-  logo: '/ssr-logo-premium.png',
+  logo: '/ssr-group-civil-logo.png',
 }
 
 export const WHATSAPP_URL = `https://wa.me/${SITE.phoneRaw}?text=Hi%20SSR%20Group!`
