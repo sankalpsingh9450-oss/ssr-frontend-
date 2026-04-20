@@ -36,12 +36,12 @@ export default function Home({ onQuoteClick }) {
       <section className="section section-surface">
         <div className="container">
           <SectionHeading
-            eyebrow="Projects"
-            title="Selected work that reflects our quality and delivery standards."
-            description="Browse recent residential and commercial projects to understand the style, scale, and seriousness of our execution."
+            eyebrow="Portfolio"
+            title="Selected portfolio work that reflects our quality and delivery standards."
+            description="Browse a smaller portfolio preview to understand the style, scale, and seriousness of our execution."
           />
           <div className="site-grid-3">
-            {PROJECTS.slice(0, 3).map((project) => (
+            {PROJECTS.slice(0, 5).map((project) => (
               <ProjectCard
                 key={project.title}
                 title={project.title}
@@ -54,7 +54,7 @@ export default function Home({ onQuoteClick }) {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link to="/projects" className="ui-btn ui-btn-secondary">View All Projects</Link>
+            <Link to="/projects" className="ui-btn ui-btn-secondary">View Full Portfolio</Link>
           </div>
         </div>
       </section>

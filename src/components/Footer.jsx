@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaYoutube } from 'react-icons/fa'
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa'
 import { SITE, SOCIAL, WHATSAPP_URL } from '../constants'
 import Button from './ui/Button'
 import './Footer.css'
@@ -38,7 +38,7 @@ export default function Footer() {
             <h4>Company</h4>
             <div className="site-footer__links">
               <Link to="/">Home</Link>
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects">Portfolio</Link>
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
@@ -61,7 +61,6 @@ export default function Footer() {
           <div className="site-footer__social">
             <a aria-label="Instagram" href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
             <a aria-label="LinkedIn" href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
-            <a aria-label="YouTube" href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
             <a aria-label="Facebook" href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
             <a aria-label="WhatsApp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"><FaWhatsapp /></a>
           </div>

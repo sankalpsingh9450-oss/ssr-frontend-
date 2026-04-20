@@ -20,7 +20,7 @@ export const SITE = {
 export const WHATSAPP_URL = `https://wa.me/${SITE.phoneRaw}?text=Hi%20SSR%20Group!`
 
 export const SOCIAL = {
-  instagram: 'https://instagram.com/ssrgroupcivil',
+  instagram: 'https://www.instagram.com/ssrgroup.civil/',
   linkedin: 'https://linkedin.com/company/ssrgroupcivil',
   youtube: 'https://youtube.com/@ssrgroupcivil',
   facebook: 'https://facebook.com/ssrgroupcivil',
@@ -169,7 +169,7 @@ export const PARTNER_CATEGORIES = [
 export const NAV_LINKS = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
-  { path: '/projects', label: 'Projects' },
+  { path: '/projects', label: 'Portfolio' },
   { path: '/about', label: 'About Us' },
   { path: '/blog', label: 'Blog' },
   { path: '/contact', label: 'Contact' },
