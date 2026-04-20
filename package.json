@@ -6,21 +6,51 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "test": "jest --runInBand --watchman=false --ci --forceExit",
+    "test:watch": "jest --watch --watchman=false",
+    "test:coverage": "jest --runInBand --coverage --watchman=false --ci --forceExit",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open",
+    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173 test:e2e",
+    "test:lighthouse": "lhci autorun --config=.lighthouserc.json",
+    "test:lighthouse:ci": "start-server-and-test preview http://127.0.0.1:4173 test:lighthouse",
+    "test:qa": "npm run test:coverage"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.99.0",
+    "framer-motion": "^11.5.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "framer-motion": "^11.5.6",
-    "react-intersection-observer": "^9.13.1",
+    "react-hook-form": "^7.72.1",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.3.0",
-    "react-helmet-async": "^2.0.5"
+    "react-router-dom": "^6.26.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
+    "@swc/core": "^1.15.26",
+    "@swc/jest": "^0.2.39",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.5.0",
+    "axe-core": "^4.11.3",
+    "cypress": "^15.14.0",
+    "cypress-axe": "^1.7.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.3.0",
+    "jest-axe": "^10.0.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "postcss": "^8.5.10",
+    "start-server-and-test": "^3.0.2",
+    "tailwindcss": "^4.2.2",
     "vite": "^5.4.7"
   }
 }

@@ -1,9 +1,11 @@
+import { getRuntimeEnv } from './lib/runtimeEnv'
+
 // ═══════════════════════════════════════════════════
 // SSR Group — Site Constants & Data
 // ═══════════════════════════════════════════════════
 
 export const SITE = {
-  name: 'SSR Group',
+  name: 'SSR Group Civil',
   tagline: 'Engineering • Construction • Development',
   phone: '+91-8796138550',
   phoneRaw: '918796138550',
@@ -24,7 +26,7 @@ export const SOCIAL = {
   facebook: 'https://facebook.com/ssrgroupcivil',
 }
 
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
+export const API_URL = getRuntimeEnv('VITE_API_URL', 'http://localhost:8000/api/v1')
 
 export const SERVICES = [
   {
@@ -167,6 +169,8 @@ export const PARTNER_CATEGORIES = [
 export const NAV_LINKS = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
+  { path: '/projects', label: 'Projects' },
   { path: '/about', label: 'About Us' },
+  { path: '/blog', label: 'Blog' },
   { path: '/contact', label: 'Contact' },
 ]

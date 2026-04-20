@@ -1,82 +1,69 @@
 import { Link } from 'react-router-dom'
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaYoutube } from 'react-icons/fa'
 import { SITE, SOCIAL, WHATSAPP_URL } from '../constants'
-import { FaInstagram, FaLinkedinIn, FaYoutube, FaFacebookF, FaWhatsapp } from 'react-icons/fa'
+import Button from './ui/Button'
 import './Footer.css'
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="site-footer">
       <div className="container">
-        <div className="footer-grid">
-          <div className="footer-about">
-            <div className="footer-logo">
-              <div className="footer-logo-icon">
-                <img src={SITE.logo} alt="SSR Group Civil logo" />
-              </div>
+        <div className="site-footer__grid">
+          <div className="site-footer__copy">
+            <div className="site-footer__brand">
+              <img src={SITE.logo} alt="SSR Group Civil logo" />
               <div>
-                <span className="footer-brand">{SITE.name}</span>
-                <span className="footer-tagline">{SITE.tagline}</span>
+                <strong>{SITE.name}</strong>
+                <span>{SITE.tagline}</span>
               </div>
             </div>
-            <p className="footer-desc">
-              Premium engineering, construction, property advisory, and sourcing for clients who want precision, trust, and execution without the usual chaos.
-            </p>
-            <div className="footer-proof-strip">
-              <span>Delhi NCR Focus</span>
-              <span>Free BOQ Support</span>
-              <span>HubSpot Lead Sync</span>
+            <p>Premium engineering, construction, real-estate advisory, and execution support for clients across Delhi NCR.</p>
+            <p>{SITE.address}</p>
+            <p>{SITE.phone}</p>
+            <p>{SITE.email}</p>
+          </div>
+
+          <div className="site-footer__column">
+            <h4>Services</h4>
+            <div className="site-footer__links">
+              <Link to="/services">Residential Construction</Link>
+              <Link to="/services">Commercial Projects</Link>
+              <Link to="/services">Interior Design</Link>
+              <Link to="/services">Renovation Services</Link>
+              <Link to="/services">Material Supply</Link>
             </div>
-            <div className="footer-contact-lines">
-              <p>{SITE.address}</p>
-              <p>{SITE.phone}</p>
-              <p>{SITE.email}</p>
+          </div>
+
+          <div className="site-footer__column">
+            <h4>Company</h4>
+            <div className="site-footer__links">
+              <Link to="/">Home</Link>
+              <Link to="/projects">Projects</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
             </div>
           </div>
 
-          <div>
-            <h4 className="footer-heading">Services</h4>
-            <Link to="/services" className="footer-link">Residential Construction</Link>
-            <Link to="/services" className="footer-link">Commercial Projects</Link>
-            <Link to="/services" className="footer-link">Property Search</Link>
-            <Link to="/services" className="footer-link">Interior Design</Link>
-            <Link to="/services" className="footer-link">Building Materials</Link>
-            <Link to="/services" className="footer-link">Renovation</Link>
-          </div>
-
-          <div>
-            <h4 className="footer-heading">Explore</h4>
-            <Link to="/about" className="footer-link">About Us</Link>
-            <Link to="/contact" className="footer-link">Contact Us</Link>
-            <Link to="/services" className="footer-link">Project Services</Link>
-            <a href="#contact" className="footer-link">Request Callback</a>
-            <a href="#cta" className="footer-link">Free Quotation</a>
-            <a href="#materials" className="footer-link">Material Sourcing</a>
-          </div>
-
-          <div>
-            <h4 className="footer-heading">Connect</h4>
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="footer-link">Instagram</a>
-            <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
-            <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" className="footer-link">YouTube</a>
-            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" className="footer-link">Facebook</a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="footer-link">WhatsApp</a>
+          <div className="site-footer__column">
+            <h4>Quick Action</h4>
+            <p>Need a faster response for a project enquiry or quotation request?</p>
+            <div style={{ marginTop: '16px' }}>
+              <Button as="a" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                Get Quote
+              </Button>
+            </div>
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} {SITE.name}. Built for premium engineering, construction, and development leads.</p>
-          <div className="footer-social">
-            {[
-              { href: SOCIAL.instagram, icon: <FaInstagram /> },
-              { href: SOCIAL.linkedin, icon: <FaLinkedinIn /> },
-              { href: SOCIAL.youtube, icon: <FaYoutube /> },
-              { href: SOCIAL.facebook, icon: <FaFacebookF /> },
-              { href: WHATSAPP_URL, icon: <FaWhatsapp /> },
-            ].map((s, i) => (
-              <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="footer-social-link">
-                {s.icon}
-              </a>
-            ))}
+        <div className="site-footer__bottom">
+          <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
+          <div className="site-footer__social">
+            <a aria-label="Instagram" href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a aria-label="LinkedIn" href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
+            <a aria-label="YouTube" href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+            <a aria-label="Facebook" href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+            <a aria-label="WhatsApp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"><FaWhatsapp /></a>
           </div>
         </div>
       </div>

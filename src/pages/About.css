@@ -37,6 +37,9 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
+.about-img-wrapper > * {
+  display: block;
+}
 .about-img-wrapper img {
   width: 100%;
   height: 420px;
