@@ -1,0 +1,28 @@
+describe('SSR Group Civil forms', () => {
+  it('submits the quote popup flow', () => {
+    cy.visit('/')
+    cy.get('.navbar-cta').click({ force: true })
+    cy.get('.popup').should('be.visible')
+    cy.get('#quote-full-name').type('SSR Client')
+    cy.get('#quote-phone').type('+919876543210')
+    cy.get('#quote-email').type('client@example.com')
+    cy.get('#quote-service').select('Residential Construction')
+    cy.get('#quote-description').type('Need a construction estimate for a premium 2200 sq ft residential build in Greater Noida West.')
+    cy.contains('Within 3 months').click()
+    cy.get('input[type="checkbox"]').check({ force: true })
+    cy.contains(/submit/i).click()
+    cy.contains(/quote request received/i).should('be.visible')
+  })
+
+  it('submits the contact form', () => {
+    cy.visit('/contact')
+    cy.get('#contact-name').type('SSR Client')
+    cy.get('#contact-phone').type('+919876543210')
+    cy.get('#contact-email').type('client@example.com')
+    cy.get('#contact-subject').select('Construction Quote')
+    cy.get('#contact-message').type('I need a detailed quote and site consultation for a residential construction project in Greater Noida West.')
+    cy.contains('WhatsApp').click()
+    cy.contains(/send message/i).click()
+    cy.contains(/message sent/i).should('be.visible')
+  })
+})
