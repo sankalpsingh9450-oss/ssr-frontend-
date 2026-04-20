@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom'
-import { PROJECTS, SERVICES, SITE } from '../constants'
+import { SERVICES, SITE } from '../constants'
 import HomeHero from '../components/heroes/HomeHero'
 import ServiceCard from '../components/ui/ServiceCard'
-import ProjectCard from '../components/ui/ProjectCard'
 import SectionHeading from '../components/ui/SectionHeading'
 import ContactInquiryForm from '../components/forms/ContactInquiryForm'
 
@@ -32,33 +30,6 @@ export default function Home({ onQuoteClick }) {
           </div>
         </div>
       </section>
-
-      <section className="section section-surface">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Portfolio"
-            title="Selected portfolio work that reflects our quality and delivery standards."
-            description="Browse a smaller portfolio preview to understand the style, scale, and seriousness of our execution."
-          />
-          <div className="site-grid-3">
-            {PROJECTS.slice(0, 5).map((project) => (
-              <ProjectCard
-                key={project.title}
-                title={project.title}
-                category={project.type}
-                description={`${project.status} • ${project.area}`}
-                image={project.img}
-                location="Delhi NCR"
-                action={{ label: 'View Details', to: '/projects' }}
-              />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link to="/projects" className="ui-btn ui-btn-secondary">View Full Portfolio</Link>
-          </div>
-        </div>
-      </section>
-
       <section className="section">
         <div className="container">
           <div className="site-grid-2">

@@ -1,10 +1,8 @@
-import { CONTACT_SUBJECTS, SERVICES, SITE, WHATSAPP_URL, PROJECTS } from '../constants'
+import { CONTACT_SUBJECTS, SERVICES, SITE, WHATSAPP_URL } from '../constants'
 
 export const QUICK_REPLIES = ['Get Quote', 'View Services', 'Contact Us']
 
 const serviceNames = SERVICES.map((service) => service.title).join(', ')
-const residentialProjects = PROJECTS.filter((project) => project.type === 'Residential').map((project) => project.title).join(', ')
-const commercialProjects = PROJECTS.filter((project) => project.type === 'Commercial').map((project) => project.title).join(', ')
 
 const KNOWLEDGE_BASE = [
   {
@@ -26,21 +24,6 @@ const KNOWLEDGE_BASE = [
     match: ['interior design', 'interior', 'interior work'],
     answer: 'Our interior and finishing support covers modular kitchens, false ceilings, premium finishes, modern layouts, and tailored execution for homes and offices.',
     suggestions: ['Get Quote', 'Contact Us', 'View Services'],
-  },
-  {
-    match: ['completed projects', 'can i see your completed projects', 'portfolio'],
-    answer: 'You can explore our featured portfolio on the Projects area of the homepage. We currently highlight premium residential and commercial work with location and status details.',
-    suggestions: ['Residential projects', 'Commercial project examples', 'View Services'],
-  },
-  {
-    match: ['residential projects', 'do you have residential projects'],
-    answer: `Yes. Some residential examples include ${residentialProjects || 'our villa, apartment, and independent floor developments'}.`,
-    suggestions: ['Get Quote', 'Talk to agent', 'Contact Us'],
-  },
-  {
-    match: ['commercial project examples', 'commercial projects example'],
-    answer: `Yes. Commercial examples include ${commercialProjects || 'our office, retail, and mixed-use project set'}. We can also arrange a guided callback for relevant references.`,
-    suggestions: ['Schedule callback', 'Get Quote', 'Talk to agent'],
   },
   {
     match: ['how do i get a quote', 'get quote', 'quotation'],
@@ -172,7 +155,7 @@ export function getBotReply(message, { language = 'en', exchangeCount = 0 } = {}
   }
 
   return {
-    text: `I can help with services, project examples, pricing, quotations, contact details, business hours, and callbacks. If you'd like, I can also capture your lead for the ${CONTACT_SUBJECTS[0]} or another service right here.`,
+    text: `I can help with services, pricing, quotations, contact details, business hours, and callbacks. If you'd like, I can also capture your lead for the ${CONTACT_SUBJECTS[0]} or another service right here.`,
     suggestions: exchangeCount >= 3 ? ['Talk to agent', 'WhatsApp support', 'Get Quote'] : QUICK_REPLIES,
     sentiment,
   }

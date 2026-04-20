@@ -38,7 +38,6 @@ export default function Footer() {
             <h4>Company</h4>
             <div className="site-footer__links">
               <Link to="/">Home</Link>
-              <Link to="/projects">Portfolio</Link>
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp Support</a>

@@ -103,15 +103,6 @@ export const SERVICES = [
   },
 ]
 
-export const PROJECTS = [
-  { title: 'Luxury Villa — Sector 1', type: 'Residential', status: 'Completed', area: '3,200 sq ft', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80' },
-  { title: 'Corporate Office Complex', type: 'Commercial', status: 'In Progress', area: '15,000 sq ft', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80' },
-  { title: 'Modern Apartment Block', type: 'Residential', status: 'Completed', area: '45,000 sq ft', img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80' },
-  { title: 'Retail Mall — Greater Noida', type: 'Commercial', status: 'Upcoming', area: '60,000 sq ft', img: 'https://images.unsplash.com/photo-1567449303078-57ad995bd329?w=600&q=80' },
-  { title: 'Independent Floor G+2', type: 'Residential', status: 'Completed', area: '1,800 sq ft', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80' },
-  { title: 'Warehouse & Industrial', type: 'Industrial', status: 'Completed', area: '25,000 sq ft', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80' },
-]
-
 export const TEAM = [
   { name: 'Sankalp Singh Rajput', role: 'Founder & CEO', desc: 'Visionary leader with deep expertise in construction and real estate across Delhi NCR.', initials: 'SS' },
   { name: 'Operations Team', role: 'Project Management', desc: 'Dedicated professionals ensuring every project is delivered on time and within budget.', initials: 'OT' },
@@ -169,7 +160,6 @@ export const PARTNER_CATEGORIES = [
 export const NAV_LINKS = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
-  { path: '/projects', label: 'Portfolio' },
   { path: '/about', label: 'About Us' },
   { path: '/blog', label: 'Blog' },
   { path: '/contact', label: 'Contact' },

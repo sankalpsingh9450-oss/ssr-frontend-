@@ -383,7 +383,6 @@ main {
   transition: transform var(--transition-base);
 }
 
-.ui-project-card,
 .ui-service-card,
 .ui-panel,
 .ui-contact-card,
@@ -395,33 +394,19 @@ main {
   transition: transform var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base);
 }
 
-.ui-project-card:hover,
 .ui-service-card:hover,
 .ui-panel:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
 }
 
-.ui-project-card:hover .ui-card-media__image,
 .ui-service-card:hover .ui-card-media__image {
   transform: scale(1.05);
 }
 
-.ui-project-card__body,
 .ui-service-card__body {
   padding: var(--space-md);
 }
-
-.ui-card-category {
-  display: inline-block;
-  color: var(--color-accent);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.ui-project-card h3,
 .ui-service-card h3 {
   margin-top: 12px;
   margin-bottom: 8px;
@@ -429,23 +414,9 @@ main {
   color: var(--color-primary);
 }
 
-.ui-project-card p,
 .ui-service-card p {
   color: var(--color-text-muted);
   font-size: 14px;
-}
-
-.ui-project-card__location {
-  margin-bottom: 8px;
-  color: var(--color-primary) !important;
-  font-weight: 600;
-}
-
-.ui-project-card__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
 }
 
 .ui-service-card__icon {

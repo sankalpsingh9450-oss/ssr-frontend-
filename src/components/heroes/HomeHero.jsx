@@ -14,7 +14,6 @@ export default function HomeHero({ onQuoteClick }) {
       description="Trusted construction, civil consultancy, property advisory, and project delivery for residential and commercial clients who want premium execution with transparent communication."
       actions={[
         { label: 'Get Quote', onClick: onQuoteClick },
-        { label: 'View Portfolio', to: '/projects', variant: 'secondary' },
       ]}
       stats={TRUST_BADGES}
       backgroundImage="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80"
