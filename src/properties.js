@@ -1,0 +1,58 @@
+export const properties = [
+  {
+    id: 1,
+    title: 'Luxury 3BHK Apartment',
+    price: '₹95 Lakhs',
+    location: 'Sector 1, Greater Noida West',
+    type: 'Apartment',
+    description: 'Premium 3BHK apartment with modern interiors, clubhouse access, and strong connectivity to Noida and Delhi.',
+    imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&q=80',
+  },
+  {
+    id: 2,
+    title: 'Independent Villa Plot',
+    price: '₹1.35 Cr',
+    location: 'Techzone 4, Greater Noida West',
+    type: 'Plot',
+    description: 'Well-positioned residential plot ideal for a custom villa project in a fast-growing premium neighborhood.',
+    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80',
+  },
+  {
+    id: 3,
+    title: 'Commercial Office Space',
+    price: '₹2.1 Cr',
+    location: 'Noida Extension',
+    type: 'Commercial',
+    description: 'Ready-to-move office space suited for professional firms, consultants, and growing business operations.',
+    imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&q=80',
+  },
+  {
+    id: 4,
+    title: 'Retail Shop Unit',
+    price: '₹78 Lakhs',
+    location: 'Gaur Chowk, Greater Noida West',
+    type: 'Retail',
+    description: 'High-visibility retail unit in a busy catchment area with strong walk-in traffic and commercial potential.',
+    imageUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&q=80',
+  },
+  {
+    id: 5,
+    title: 'Premium Builder Floor',
+    price: '₹1.1 Cr',
+    location: 'Noida Sector 121',
+    type: 'Builder Floor',
+    description: 'Elegant builder floor with spacious bedrooms, balcony views, and a clean residential community setting.',
+    imageUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80',
+  },
+  {
+    id: 6,
+    title: 'Warehouse Investment Property',
+    price: '₹3.8 Cr',
+    location: 'Ecotech Industrial Area',
+    type: 'Industrial',
+    description: 'Large-format warehouse property suitable for logistics, storage, and long-term industrial investment.',
+    imageUrl: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&q=80',
+  },
+]
+
+export default properties

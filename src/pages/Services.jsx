@@ -5,6 +5,14 @@ import ServiceCard from '../components/ui/ServiceCard'
 import SectionHeading from '../components/ui/SectionHeading'
 import Button from '../components/ui/Button'
 
+const SERVICE_DETAIL_PATHS = {
+  residential: '/services/residential-construction',
+  commercial: '/services/commercial-projects',
+  interior: '/services/interior-renovation',
+  renovation: '/services/interior-renovation',
+  'property-search': '/services/investment-advisory',
+}
+
 export default function Services({ onQuoteClick }) {
   const [selectedCategory, setSelectedCategory] = useState('Residential')
   const [selectedServiceId, setSelectedServiceId] = useState('residential')
@@ -45,7 +53,10 @@ export default function Services({ onQuoteClick }) {
                 title={service.title}
                 description={service.desc}
                 image={service.img}
-                action={{ label: 'Learn More', to: '/contact' }}
+                action={{
+                  label: 'Learn More',
+                  to: SERVICE_DETAIL_PATHS[service.id] || '/services',
+                }}
               />
             ))}
           </div>

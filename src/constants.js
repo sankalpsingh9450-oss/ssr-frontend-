@@ -160,6 +160,7 @@ export const PARTNER_CATEGORIES = [
 export const NAV_LINKS = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
+  { path: '/properties', label: 'Properties' },
   { path: '/about', label: 'About Us' },
   { path: '/blog', label: 'Blog' },
   { path: '/contact', label: 'Contact' },

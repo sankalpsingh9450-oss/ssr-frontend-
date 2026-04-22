@@ -73,6 +73,14 @@ export const businessInquirySchema = z.object({
   message: z.string().trim().min(20, 'Please share at least 20 characters about your enquiry.'),
 })
 
+export const propertyLeadSchema = z.object({
+  name: z.string().trim().min(2, 'Please enter your name.'),
+  phone: z.string().trim().regex(/^\d{10}$/, 'Please enter a valid 10 digit phone number.'),
+  budget: z.enum(['50L-1Cr', '1Cr-3Cr', '3Cr-5Cr'], {
+    error: () => ({ message: 'Please select your budget range.' }),
+  }),
+})
+
 export function mapFilesToMetadata(fileList) {
   return Array.from(fileList || []).map((file) => ({
     name: file.name,

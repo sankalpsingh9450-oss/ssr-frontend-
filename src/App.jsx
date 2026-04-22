@@ -10,6 +10,8 @@ const ChatbotWidget = lazy(() => import('./components/ChatbotWidget'))
 const PopupForm = lazy(() => import('./components/PopupForm'))
 const Home = lazy(() => import('./pages/Home'))
 const Services = lazy(() => import('./pages/Services'))
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
+const Properties = lazy(() => import('./pages/Properties'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Login = lazy(() => import('./pages/Login'))
@@ -112,6 +114,8 @@ export default function App() {
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<PageWrapper><Home onQuoteClick={openQuote} /></PageWrapper>} />
               <Route path="/services" element={<PageWrapper><Services onQuoteClick={openQuote} /></PageWrapper>} />
+              <Route path="/services/:slug" element={<PageWrapper><ServiceDetail /></PageWrapper>} />
+              <Route path="/properties" element={<PageWrapper><Properties /></PageWrapper>} />
               <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
               <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
               <Route path="/profile/*" element={<PageWrapper><Profile /></PageWrapper>} />

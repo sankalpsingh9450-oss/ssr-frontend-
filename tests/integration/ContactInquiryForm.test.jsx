@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ContactInquiryForm from '../../src/components/forms/ContactInquiryForm'
 import { renderWithProviders } from '../utils/renderWithProviders'
@@ -32,11 +32,15 @@ describe('ContactInquiryForm', () => {
     renderWithProviders(<ContactInquiryForm />)
     const user = userEvent.setup()
 
-    await user.type(screen.getByLabelText(/full name/i), 'SSR Client')
-    await user.type(screen.getByLabelText(/^phone \*/i), '+919876543210')
-    await user.type(screen.getByLabelText(/^email \*/i), 'client@example.com')
+    fireEvent.change(screen.getByLabelText(/full name/i), { target: { value: 'SSR Client' } })
+    fireEvent.change(screen.getByLabelText(/^phone \*/i), { target: { value: '+919876543210' } })
+    fireEvent.change(screen.getByLabelText(/^email \*/i), { target: { value: 'client@example.com' } })
     await user.selectOptions(screen.getByLabelText(/subject/i), 'Construction Quote')
-    await user.type(screen.getByLabelText(/^message/i), 'I need a full construction estimate for a planned residential project in Greater Noida West.')
+    fireEvent.change(screen.getByLabelText(/^message/i), {
+      target: {
+        value: 'I need a full construction estimate for a planned residential project in Greater Noida West.',
+      },
+    })
     await user.click(screen.getByLabelText(/whatsapp/i))
     await user.click(screen.getByRole('button', { name: /send message/i }))
 

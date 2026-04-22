@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import QuoteRequestForm from '../../src/components/forms/QuoteRequestForm'
@@ -36,11 +36,15 @@ describe('QuoteRequestForm', () => {
     renderWithProviders(<QuoteRequestForm onSubmitted={onSubmitted} />)
     const user = userEvent.setup()
 
-    await user.type(screen.getByLabelText(/full name/i), 'SSR Client')
-    await user.type(screen.getByLabelText(/^phone/i), '+919876543210')
-    await user.type(screen.getByLabelText(/^email/i), 'client@example.com')
+    fireEvent.change(screen.getByLabelText(/full name/i), { target: { value: 'SSR Client' } })
+    fireEvent.change(screen.getByLabelText(/^phone/i), { target: { value: '+919876543210' } })
+    fireEvent.change(screen.getByLabelText(/^email/i), { target: { value: 'client@example.com' } })
     await user.selectOptions(screen.getByLabelText(/service type/i), 'Residential Construction')
-    await user.type(screen.getByLabelText(/project description/i), 'Need a detailed quote for a 2200 sq ft villa with premium finishing.')
+    fireEvent.change(screen.getByLabelText(/project description/i), {
+      target: {
+        value: 'Need a detailed quote for a 2200 sq ft villa with premium finishing.',
+      },
+    })
     await user.click(screen.getByLabelText(/within 3 months/i))
     await user.click(screen.getByRole('checkbox'))
     await user.click(screen.getByRole('button', { name: /submit/i }))

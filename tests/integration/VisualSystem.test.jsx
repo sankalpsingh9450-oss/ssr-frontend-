@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import Button from '../../src/components/ui/Button'
 import HeroSection from '../../src/components/ui/HeroSection'
-import ProjectCard from '../../src/components/ui/ProjectCard'
+import ServiceCard from '../../src/components/ui/ServiceCard'
 import { renderWithProviders } from '../utils/renderWithProviders'
 
 describe('visual design system primitives', () => {
@@ -44,20 +44,20 @@ describe('visual design system primitives', () => {
     expect(screen.getByLabelText(/scroll down to next section/i)).toBeInTheDocument()
   })
 
-  test('renders a project card with image, category, summary, and action', () => {
+  test('renders a service card with image, summary, and action', () => {
     renderWithProviders(
-      <ProjectCard
-        title="Luxury Villa — Sector 1"
-        category="Residential"
-        description="Premium custom home with integrated civil, interior, and finishing services."
+      <ServiceCard
+        icon="🏗️"
+        title="Residential Construction"
+        description="Premium custom home delivery with integrated civil, interior, and finishing services."
         image="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
-        action={{ label: 'View Details', to: '/projects' }}
+        action={{ label: 'Learn More', to: '/services/residential-construction' }}
       />
     )
 
-    expect(screen.getByRole('img', { name: /luxury villa — sector 1/i })).toBeInTheDocument()
-    expect(screen.getByText(/residential/i)).toBeInTheDocument()
-    expect(screen.getByText(/premium custom home/i)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /view details/i })).toHaveClass('ui-btn', 'ui-btn-tertiary')
+    expect(screen.getByRole('img', { name: /residential construction/i })).toBeInTheDocument()
+    expect(screen.getByText(/residential construction/i)).toBeInTheDocument()
+    expect(screen.getByText(/premium custom home delivery/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /learn more/i })).toHaveClass('ui-btn', 'ui-btn-tertiary')
   })
 })
