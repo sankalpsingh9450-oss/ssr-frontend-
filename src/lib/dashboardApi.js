@@ -1,7 +1,20 @@
-import { SITE } from '../constants'
+import { API_URL, SITE } from '../constants'
 
 const STORAGE_KEY = 'ssr-dashboard-data'
 const delay = (ms = 450) => new Promise((resolve) => setTimeout(resolve, ms))
+
+function isLocalFallback() {
+  return !API_URL || API_URL.includes('localhost:8000/api/v1')
+}
+
+async function parseError(response) {
+  try {
+    const data = await response.json()
+    return data?.message || data?.detail || 'Something went wrong. Please try again.'
+  } catch {
+    return 'Something went wrong. Please try again.'
+  }
+}
 
 const defaultData = {
   profile: {
@@ -168,6 +181,50 @@ export const dashboardApi = {
   },
 
   async getInquiries({ filter = 'All', page = 1, pageSize = 4 } = {}) {
+    if (!isLocalFallback()) {
+      const storeProfile = readStore().profile
+      const query = new URLSearchParams()
+      if (storeProfile.email) query.set('email', storeProfile.email)
+      if (storeProfile.phone) query.set('phone', storeProfile.phone)
+
+      const response = await fetch(`${API_URL}/user/leads?${query.toString()}`, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        credentials: 'include',
+      })
+
+      if (!response.ok) {
+        throw new Error(await parseError(response))
+      }
+
+      const payload = await response.json()
+      const all = payload?.data?.items || []
+      const normalized = all.map((item) => ({
+        id: item.id,
+        date: item.date,
+        serviceType: item.service_or_property,
+        status: item.status,
+        detail: item.full_details,
+        preview: item.message_preview,
+        source: item.source,
+        leadType: item.lead_type,
+      }))
+
+      const filtered = filter === 'All' ? normalized : normalized.filter((item) => item.status === filter)
+      const total = filtered.length
+      const totalPages = Math.max(1, Math.ceil(total / pageSize))
+      const safePage = Math.min(page, totalPages)
+      const start = (safePage - 1) * pageSize
+
+      return {
+        items: filtered.slice(start, start + pageSize),
+        total,
+        page: safePage,
+        totalPages,
+      }
+    }
+
     await delay()
     const all = readStore().inquiries
     const filtered = filter === 'All' ? all : all.filter((item) => item.status === filter)

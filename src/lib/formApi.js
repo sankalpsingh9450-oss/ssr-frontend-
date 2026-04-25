@@ -63,6 +63,13 @@ function saveNewsletterEntry(entry) {
 }
 
 export const formApi = {
+  async submitLead(payload) {
+    return request('/lead', payload, {
+      success: true,
+      message: 'Lead received successfully',
+    })
+  },
+
   async submitQuoteRequest(payload) {
     return request('/quote/', payload, {
       success: true,
@@ -104,5 +111,9 @@ export const formApi = {
       success: true,
       message: 'Your business enquiry has been received successfully.',
     })
+  },
+
+  async submitPropertyLead(payload) {
+    return this.submitLead(payload)
   },
 }

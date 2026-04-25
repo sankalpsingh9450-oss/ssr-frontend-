@@ -1,8 +1,54 @@
+import { FiMail, FiMapPin, FiMessageCircle, FiPhoneCall } from 'react-icons/fi'
 import { SITE, WHATSAPP_URL } from '../constants'
 import ContactHero from '../components/heroes/ContactHero'
 import ContactInquiryForm from '../components/forms/ContactInquiryForm'
-import BusinessInquiryForm from '../components/forms/BusinessInquiryForm'
 import SectionHeading from '../components/ui/SectionHeading'
+
+const CONTACT_OPTIONS = [
+  {
+    title: 'Call Us',
+    value: SITE.phone,
+    href: `tel:${SITE.phoneRaw}`,
+    icon: FiPhoneCall,
+    description: 'Best for urgent project conversations and quick guidance.',
+  },
+  {
+    title: 'WhatsApp',
+    value: 'Chat on WhatsApp',
+    href: WHATSAPP_URL,
+    icon: FiMessageCircle,
+    description: 'Fastest option for site updates, documents, and quick queries.',
+  },
+  {
+    title: 'Email',
+    value: SITE.email,
+    href: `mailto:${SITE.email}`,
+    icon: FiMail,
+    description: 'Use email when you want to share a detailed brief or attachments.',
+  },
+  {
+    title: 'Office',
+    value: SITE.address,
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.address)}`,
+    icon: FiMapPin,
+    description: 'Visit or navigate to our Greater Noida West office location.',
+  },
+]
+
+const CONTACT_FAQS = [
+  {
+    question: 'How quickly does your team respond?',
+    answer: 'We aim to respond to most new enquiries within working hours on the same day, especially for phone and WhatsApp requests.',
+  },
+  {
+    question: 'Can I contact you before finalizing my budget?',
+    answer: 'Yes. Many clients reach out early for planning guidance, rough budgeting, and advice on the right next step.',
+  },
+  {
+    question: 'Do you handle both residential and commercial enquiries?',
+    answer: 'Yes. We support construction, interiors, property search, investment advisory, and material-related conversations across multiple project types.',
+  },
+]
 
 export default function Contact() {
   return (
@@ -11,49 +57,88 @@ export default function Contact() {
 
       <section className="section" id="hero-next">
         <div className="container">
-          <div className="site-grid-2">
-            <div className="ui-contact-card">
-              <SectionHeading
-                eyebrow="Contact Details"
-                title="Reach us through the right channel"
-                description="For urgent project enquiries, WhatsApp and phone are the fastest routes. For detailed briefs, use the form."
-                align="left"
-              />
-              <div className="mt-6 space-y-3 text-sm text-[var(--color-text-muted)]">
-                <p><strong className="text-[var(--color-primary)]">Contact Person:</strong> {SITE.founder}</p>
-                <p><strong className="text-[var(--color-primary)]">Phone:</strong> {SITE.phone}</p>
-                <p><strong className="text-[var(--color-primary)]">Email:</strong> {SITE.email}</p>
-                <p><strong className="text-[var(--color-primary)]">Office:</strong> {SITE.address}</p>
-                <p><strong className="text-[var(--color-primary)]">Hours:</strong> {SITE.hours}</p>
-              </div>
-              <div className="mt-6">
-                <a className="ui-btn ui-btn-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="space-y-6">
+              <div className="ui-contact-card">
+                <SectionHeading
+                  eyebrow="Contact Options"
+                  title="Choose the fastest way to reach the SSR Group Civil team."
+                  description="Use the option that fits your urgency and intent. For detailed project discussions, fill out the smart enquiry form."
+                  align="left"
+                />
+                <div className="mt-6 grid gap-4">
+                  {CONTACT_OPTIONS.map((option) => {
+                    const Icon = option.icon
+
+                    return (
+                      <a
+                        key={option.title}
+                        href={option.href}
+                        target={option.title === 'WhatsApp' || option.title === 'Office' ? '_blank' : undefined}
+                        rel={option.title === 'WhatsApp' || option.title === 'Office' ? 'noopener noreferrer' : undefined}
+                        className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+                      >
+                        <div className="flex items-start gap-4">
+                          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#1a2540] text-white">
+                            <Icon />
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#d4af37]">{option.title}</p>
+                            <p className="mt-2 text-base font-semibold text-slate-900">{option.value}</p>
+                            <p className="mt-2 text-sm leading-7 text-slate-600">{option.description}</p>
+                          </div>
+                        </div>
+                      </a>
+                    )
+                  })}
+                </div>
+                <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#d4af37]">Office Hours</p>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">{SITE.hours}</p>
+                  <p className="mt-1 text-sm leading-7 text-slate-600">Primary contact: {SITE.founder}</p>
+                </div>
               </div>
             </div>
 
             <div className="ui-form-card" id="contact-form">
-              <h3 className="text-[24px] text-[var(--color-primary)]">Contact Form</h3>
-              <p className="mt-2 text-sm text-[var(--color-text-muted)]">Share your enquiry and our team will respond with the right next step.</p>
+              <h3 className="text-[24px] text-[var(--color-primary)]">Smart Contact Form</h3>
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+                Choose your intent first so the form adapts to construction, property, investment, or general enquiries.
+              </p>
               <div className="mt-6">
                 <ContactInquiryForm />
               </div>
             </div>
           </div>
 
-          <div className="mt-8 responsive-video">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.123!2d77.43!3d28.59!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM1JzI0LjAiTiA3N8KwMjUnNDguMCJF!5e0!3m2!1sen!2sin!4v1"
-              loading="lazy"
-              title="SSR Group office location"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+              <SectionHeading
+                eyebrow="FAQ"
+                title="Common questions before you contact us"
+                description="A few quick answers to help you choose the right channel and tell us what you need."
+                align="left"
+              />
+              <div className="mt-6 space-y-4">
+                {CONTACT_FAQS.map((item) => (
+                  <div key={item.question} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                    <h3 className="text-lg font-semibold text-slate-900">{item.question}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-8 ui-form-card">
-            <h3 className="text-[24px] text-[var(--color-primary)]">Business & Partner Enquiries</h3>
-            <p className="mt-2 text-sm text-[var(--color-text-muted)]">Use this section for company partnerships, vendor proposals, or business-level conversations.</p>
-            <div className="mt-6">
-              <BusinessInquiryForm />
+            <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+              <SectionHeading
+                eyebrow="Office Map"
+                title="Office location placeholder"
+                description="We can replace this with a live embedded map or a more exact directions module when needed."
+                align="left"
+              />
+              <div className="mt-6 flex min-h-[320px] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 text-center text-sm leading-7 text-slate-500">
+                Office map embed placeholder for SSR Group Civil, Greater Noida West.
+              </div>
             </div>
           </div>
         </div>

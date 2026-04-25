@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import toast from 'react-hot-toast'
-import { CONTACT_SUBJECTS } from '../../constants'
 import { clearDraft, loadDraft, saveDraft } from '../../lib/formDrafts'
 import { formApi } from '../../lib/formApi'
 import { contactFormSchema } from '../../lib/formSchemas'
@@ -13,9 +12,24 @@ const DEFAULT_VALUES = {
   name: '',
   email: '',
   phone: '',
+  intent: 'Construction',
   subject: '',
   message: '',
   preferredContactMethod: 'Phone',
+  plotSize: '',
+  projectStage: '',
+  budget: '',
+  preferredLocation: '',
+  investmentGoal: '',
+}
+
+const INTENT_OPTIONS = ['Construction', 'Property', 'Investment', 'Other']
+const PROJECT_STAGES = ['Planning', 'Design in Progress', 'Ready to Start', 'Already Under Construction']
+const SUBJECT_BY_INTENT = {
+  Construction: 'Construction Quote',
+  Property: 'Property Enquiry',
+  Investment: 'Investment Advisory',
+  Other: 'Other',
 }
 
 export default function ContactInquiryForm() {
@@ -35,6 +49,7 @@ export default function ContactInquiryForm() {
     defaultValues: draftDefaults,
   })
 
+  const intent = watch('intent') || 'Construction'
   const message = watch('message') || ''
 
   useEffect(() => {
@@ -46,7 +61,10 @@ export default function ContactInquiryForm() {
     setServerError('')
 
     try {
-      const response = await formApi.submitContactInquiry(values)
+      const response = await formApi.submitContactInquiry({
+        ...values,
+        subject: SUBJECT_BY_INTENT[values.intent] || 'Other',
+      })
       setIsSubmitted(true)
       clearDraft(DRAFT_KEY)
       reset(DEFAULT_VALUES)
@@ -71,6 +89,19 @@ export default function ContactInquiryForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div className="form-group">
+        <span className="field-legend">What do you need help with? *</span>
+        <div className="field-choice-grid mt-2">
+          {INTENT_OPTIONS.map((option) => (
+            <label key={option} className="field-choice">
+              <input type="radio" value={option} {...register('intent')} />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+        <FieldError message={errors.intent?.message} id="contact-intent-error" />
+      </div>
+
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="contact-name">Full Name *</label>
@@ -90,14 +121,90 @@ export default function ContactInquiryForm() {
         <FieldError message={errors.email?.message} id="contact-email-error" />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="contact-subject">Subject *</label>
-        <select id="contact-subject" {...register('subject')} className={getInputClass(errors.subject)} aria-invalid={Boolean(errors.subject)}>
-          <option value="">Select subject</option>
-          {CONTACT_SUBJECTS.map((subject) => <option key={subject}>{subject}</option>)}
-        </select>
-        <FieldError message={errors.subject?.message} id="contact-subject-error" />
-      </div>
+      {intent === 'Construction' ? (
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="contact-plot-size">Plot Size / Site Area *</label>
+            <input
+              id="contact-plot-size"
+              {...register('plotSize')}
+              className={getInputClass(errors.plotSize)}
+              placeholder="e.g. 1800 sq ft"
+              aria-invalid={Boolean(errors.plotSize)}
+            />
+            <FieldError message={errors.plotSize?.message} id="contact-plot-size-error" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contact-project-stage">Project Stage *</label>
+            <select
+              id="contact-project-stage"
+              {...register('projectStage')}
+              className={getInputClass(errors.projectStage)}
+              aria-invalid={Boolean(errors.projectStage)}
+            >
+              <option value="">Select stage</option>
+              {PROJECT_STAGES.map((stage) => (
+                <option key={stage}>{stage}</option>
+              ))}
+            </select>
+            <FieldError message={errors.projectStage?.message} id="contact-project-stage-error" />
+          </div>
+        </div>
+      ) : null}
+
+      {intent === 'Property' ? (
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="contact-budget">Budget *</label>
+            <input
+              id="contact-budget"
+              {...register('budget')}
+              className={getInputClass(errors.budget)}
+              placeholder="e.g. ₹50L - ₹1Cr"
+              aria-invalid={Boolean(errors.budget)}
+            />
+            <FieldError message={errors.budget?.message} id="contact-budget-error" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contact-preferred-location">Preferred Location *</label>
+            <input
+              id="contact-preferred-location"
+              {...register('preferredLocation')}
+              className={getInputClass(errors.preferredLocation)}
+              placeholder="e.g. Greater Noida West"
+              aria-invalid={Boolean(errors.preferredLocation)}
+            />
+            <FieldError message={errors.preferredLocation?.message} id="contact-preferred-location-error" />
+          </div>
+        </div>
+      ) : null}
+
+      {intent === 'Investment' ? (
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="contact-investment-budget">Budget *</label>
+            <input
+              id="contact-investment-budget"
+              {...register('budget')}
+              className={getInputClass(errors.budget)}
+              placeholder="e.g. ₹1Cr - ₹3Cr"
+              aria-invalid={Boolean(errors.budget)}
+            />
+            <FieldError message={errors.budget?.message} id="contact-investment-budget-error" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="contact-investment-goal">Investment Goal *</label>
+            <input
+              id="contact-investment-goal"
+              {...register('investmentGoal')}
+              className={getInputClass(errors.investmentGoal)}
+              placeholder="e.g. Rental yield / long-term appreciation"
+              aria-invalid={Boolean(errors.investmentGoal)}
+            />
+            <FieldError message={errors.investmentGoal?.message} id="contact-investment-goal-error" />
+          </div>
+        </div>
+      ) : null}
 
       <div className="form-group">
         <label htmlFor="contact-message">Message *</label>

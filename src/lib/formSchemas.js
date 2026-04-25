@@ -42,19 +42,80 @@ export const quoteRequestSchema = z.object({
   }),
 })
 
-export const contactFormSchema = z.object({
-  name: z.string().trim().min(2, 'Please enter your name.'),
-  email: z.string().trim().email('Please enter a valid email address.'),
-  phone: z
-    .string()
-    .trim()
-    .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
-  subject: z.string().trim().min(1, 'Please choose a subject.'),
-  message: z.string().trim().min(50, 'Please share at least 50 characters so we can respond properly.'),
-  preferredContactMethod: z.enum(['Phone', 'Email', 'WhatsApp'], {
-    error: () => ({ message: 'Please select your preferred contact method.' }),
-  }),
-})
+export const contactFormSchema = z
+  .object({
+    name: z.string().trim().min(2, 'Please enter your name.'),
+    email: z.string().trim().email('Please enter a valid email address.'),
+    phone: z
+      .string()
+      .trim()
+      .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
+    intent: z.enum(['Construction', 'Property', 'Investment', 'Other'], {
+      error: () => ({ message: 'Please choose what you need help with.' }),
+    }),
+    subject: z.string().trim().optional(),
+    message: z.string().trim().min(50, 'Please share at least 50 characters so we can respond properly.'),
+    preferredContactMethod: z.enum(['Phone', 'Email', 'WhatsApp'], {
+      error: () => ({ message: 'Please select your preferred contact method.' }),
+    }),
+    plotSize: z.string().trim().optional(),
+    projectStage: z.string().trim().optional(),
+    budget: z.string().trim().optional(),
+    preferredLocation: z.string().trim().optional(),
+    investmentGoal: z.string().trim().optional(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.intent === 'Construction') {
+      if (!values.plotSize) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['plotSize'],
+          message: 'Please share the plot size or site area.',
+        })
+      }
+      if (!values.projectStage) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['projectStage'],
+          message: 'Please select your current project stage.',
+        })
+      }
+    }
+
+    if (values.intent === 'Property') {
+      if (!values.budget) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['budget'],
+          message: 'Please share your budget range.',
+        })
+      }
+      if (!values.preferredLocation) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['preferredLocation'],
+          message: 'Please share your preferred location.',
+        })
+      }
+    }
+
+    if (values.intent === 'Investment') {
+      if (!values.budget) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['budget'],
+          message: 'Please share your investment budget.',
+        })
+      }
+      if (!values.investmentGoal) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['investmentGoal'],
+          message: 'Please share your investment goal.',
+        })
+      }
+    }
+  })
 
 export const newsletterSchema = z.object({
   email: z.string().trim().email('Please enter a valid email address.'),
@@ -79,6 +140,55 @@ export const propertyLeadSchema = z.object({
   budget: z.enum(['50L-1Cr', '1Cr-3Cr', '3Cr-5Cr'], {
     error: () => ({ message: 'Please select your budget range.' }),
   }),
+})
+
+export const exitIntentLeadSchema = z.object({
+  name: z.string().trim().min(2, 'Please enter your name.'),
+  phone: z
+    .string()
+    .trim()
+    .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
+  email: z.string().trim().email('Please enter a valid email address.'),
+})
+
+export function getConsultationLeadSchema({ requirePlotSize = false, requireBudget = false } = {}) {
+  return z.object({
+    name: z.string().trim().min(2, 'Please enter your name.'),
+    email: z.string().trim().email('Please enter a valid email address.'),
+    phone: z
+      .string()
+      .trim()
+      .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
+    service: z.string().trim().min(1, 'Service context is required.'),
+    property_id: z.string().trim().optional(),
+    plotSize: requirePlotSize
+      ? z.string().trim().min(2, 'Please share your plot size or site area.')
+      : z.string().trim().optional(),
+    budget: requireBudget
+      ? z.string().trim().min(2, 'Please share your target budget.')
+      : z.string().trim().optional(),
+  })
+}
+
+export const siteVisitLeadSchema = z.object({
+  name: z.string().trim().min(2, 'Please enter your name.'),
+  phone: z
+    .string()
+    .trim()
+    .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
+  email: z.string().trim().email('Please enter a valid email address.'),
+  preferredVisitDate: z.string().trim().min(1, 'Please select your preferred visit date.'),
+  property_id: z.string().trim().min(1, 'Property context is required.'),
+  property_title: z.string().trim().min(1, 'Property title is required.'),
+})
+
+export const constructionCalculatorLeadSchema = z.object({
+  name: z.string().trim().min(2, 'Please enter your name.'),
+  phone: z
+    .string()
+    .trim()
+    .regex(indianPhoneRegex, 'Please enter a valid Indian number like +91 9876543210.'),
+  email: z.string().trim().email('Please enter a valid email address.'),
 })
 
 export function mapFilesToMetadata(fileList) {

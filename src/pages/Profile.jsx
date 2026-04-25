@@ -32,11 +32,15 @@ import {
 import { SITE } from '../constants'
 import { dashboardApi, dashboardKeys } from '../lib/dashboardApi'
 import { normalizeProfileInput, passwordChangeSchema, profileSchema } from '../lib/dashboardSchemas'
+import properties from '../properties'
+import PropertyCard from '../components/PropertyCard'
+import { getSavedPropertyIds, toggleSavedPropertyId } from '../lib/savedProperties'
 import { clearSession } from '../lib/session'
 import ResponsiveImage from '../components/ResponsiveImage'
 
 const navItems = [
   { key: 'overview', label: 'Profile', path: '/profile', icon: FiUser },
+  { key: 'saved-properties', label: 'Saved Properties', path: '/profile/saved-properties', icon: FiHeart },
   { key: 'saved-projects', label: 'Saved Projects', path: '/profile/saved-projects', icon: FiHeart },
   { key: 'inquiries', label: 'My Inquiries', path: '/profile/inquiries', icon: FiFolder },
   { key: 'quote-requests', label: 'Quote Requests', path: '/profile/quote-requests', icon: FiFileText },
@@ -48,6 +52,10 @@ const sectionTitles = {
   overview: {
     title: 'Profile overview',
     description: 'Manage your personal details, profile image, and account access in one place.',
+  },
+  'saved-properties': {
+    title: 'Saved properties',
+    description: 'Review the property listings you have shortlisted and jump back into the detail pages whenever you are ready.',
   },
   'saved-projects': {
     title: 'Saved projects',
@@ -75,6 +83,7 @@ const inputClassName =
   'mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/30'
 
 function getSectionFromPath(pathname) {
+  if (pathname.startsWith('/profile/saved-properties')) return 'saved-properties'
   if (pathname.startsWith('/profile/saved-projects')) return 'saved-projects'
   if (pathname.startsWith('/profile/inquiries')) return 'inquiries'
   if (pathname.startsWith('/profile/quote-requests')) return 'quote-requests'
@@ -117,6 +126,7 @@ function StatusPill({ status }) {
     Pending: 'bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-200',
     Contacted: 'bg-sky-100 text-sky-800 dark:bg-sky-500/15 dark:text-sky-200',
     Completed: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200',
+    Submitted: 'bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-white/75',
     Sent: 'bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-200',
     Reviewed: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200',
     Declined: 'bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-200',
@@ -397,93 +407,131 @@ function SavedProjectsSection({ projects, compareIds, onToggleCompare, onRemove 
   )
 }
 
-function InquiriesSection({ data, filter, setFilter, page, setPage, onDelete }) {
+function SavedPropertiesSection() {
+  const [savedIds, setSavedIds] = useState([])
+
+  useEffect(() => {
+    const syncSavedIds = () => setSavedIds(getSavedPropertyIds())
+
+    syncSavedIds()
+    window.addEventListener('storage', syncSavedIds)
+    return () => window.removeEventListener('storage', syncSavedIds)
+  }, [])
+
+  const savedProperties = useMemo(
+    () => properties.filter((property) => savedIds.includes(property.id)),
+    [savedIds]
+  )
+
+  const handleToggleSave = (id) => {
+    setSavedIds(toggleSavedPropertyId(id))
+    toast.success('Saved properties updated.')
+  }
+
+  if (!savedProperties.length) {
+    return (
+      <EmptyState
+        title="No saved properties yet"
+        text="Use the heart icon on the properties page to save listings you want to revisit from your dashboard."
+        action={<Link to="/properties" className="inline-flex rounded-2xl bg-[#d4af37] px-5 py-3 text-sm font-bold text-[#1a2540]">View All Properties</Link>}
+      />
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-slate-500 dark:text-white/60">{savedProperties.length} saved properties ready to review.</p>
+        <Link
+          to="/properties"
+          className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-[#d4af37] hover:text-slate-900 dark:border-white/10 dark:text-white/75 dark:hover:text-white"
+        >
+          View All Properties
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        {savedProperties.map((property) => (
+          <PropertyCard
+            key={property.id}
+            property={property}
+            isSaved={savedIds.includes(property.id)}
+            onToggleSave={handleToggleSave}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function InquiriesSection({ data }) {
   const [activeDetail, setActiveDetail] = useState(null)
+
+  if (!data.items.length) {
+    return (
+      <EmptyState
+        title="No inquiries yet"
+        text="Once you submit a contact request, property lead, or service enquiry, it will appear here with its latest status and full submission details."
+        action={
+          <Link to="/contact" className="inline-flex rounded-2xl bg-[#d4af37] px-5 py-3 text-sm font-bold text-[#1a2540]">
+            Make an inquiry
+          </Link>
+        }
+      />
+    )
+  }
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white">All submitted inquiries</h3>
-          <p className="mt-1 text-sm text-slate-500 dark:text-white/60">Filter by follow-up stage and track exactly where each lead stands.</p>
-        </div>
-        <label className="text-sm font-medium text-slate-600 dark:text-white/70">
-          <span className="mr-3">Filter</span>
-          <select
-            value={filter}
-            onChange={(event) => {
-              setFilter(event.target.value)
-              setPage(1)
-            }}
-            className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none dark:border-white/10 dark:bg-white/[0.04] dark:text-white"
-          >
-            {['All', 'Pending', 'Contacted', 'Completed'].map((option) => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
-        </label>
+      <div>
+        <h3 className="text-xl font-bold text-slate-900 dark:text-white">My submitted inquiries</h3>
+        <p className="mt-1 text-sm text-slate-500 dark:text-white/60">
+          Review every lead you have sent, check its current status, and expand any item to see the full submission context.
+        </p>
       </div>
 
       <div className="space-y-4">
         {data.items.map((inquiry) => (
-          <div key={inquiry.id} className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-white/40">{new Date(inquiry.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                <h4 className="mt-2 text-lg font-bold text-slate-900 dark:text-white">{inquiry.serviceType}</h4>
-                <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-white/60">{inquiry.detail}</p>
+          <div key={inquiry.id} className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+            <div className="absolute bottom-0 left-7 top-0 hidden w-px bg-slate-200 dark:bg-white/10 sm:block" aria-hidden="true" />
+            <div className="relative flex gap-4">
+              <div className="hidden pt-1 sm:block">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#d4af37] text-[#1a2540] shadow-sm">
+                  <FiClock className="text-sm" />
+                </div>
               </div>
-              <StatusPill status={inquiry.status} />
-            </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-white/40">
+                      {new Date(inquiry.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                    <h4 className="mt-2 text-lg font-bold text-slate-900 dark:text-white">{inquiry.serviceType}</h4>
+                    <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-white/60">{inquiry.preview || inquiry.detail}</p>
+                  </div>
+                  <StatusPill status={inquiry.status} />
+                </div>
 
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() => setActiveDetail(activeDetail === inquiry.id ? null : inquiry.id)}
-                className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:text-white/75"
-              >
-                <FiMoreHorizontal />
-                {activeDetail === inquiry.id ? 'Hide details' : 'View details'}
-              </button>
-              <button
-                type="button"
-                onClick={() => onDelete(inquiry.id)}
-                className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 px-4 py-3 text-sm font-semibold text-rose-700 dark:border-rose-500/20 dark:text-rose-200"
-              >
-                <FiTrash2 />
-                Delete inquiry
-              </button>
-            </div>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveDetail(activeDetail === inquiry.id ? null : inquiry.id)}
+                    className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:text-white/75"
+                  >
+                    <FiMoreHorizontal />
+                    {activeDetail === inquiry.id ? 'Hide details' : 'View details'}
+                  </button>
+                </div>
 
-            {activeDetail === inquiry.id ? (
-              <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/65">
-                This inquiry was routed through the dashboard-ready lead system and is now available for status updates, support follow-up, and CRM sync.
+                {activeDetail === inquiry.id ? (
+                  <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/65">
+                    {inquiry.detail}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
+            </div>
           </div>
         ))}
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-slate-500 dark:text-white/60">Page {data.page} of {data.totalPages}</p>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            disabled={data.page <= 1}
-            onClick={() => setPage((current) => Math.max(1, current - 1))}
-            className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50 dark:border-white/10 dark:text-white/75"
-          >
-            Previous
-          </button>
-          <button
-            type="button"
-            disabled={data.page >= data.totalPages}
-            onClick={() => setPage((current) => Math.min(data.totalPages, current + 1))}
-            className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-50 dark:border-white/10 dark:text-white/75"
-          >
-            Next
-          </button>
-        </div>
       </div>
     </div>
   )
@@ -736,15 +784,14 @@ export default function Profile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const section = getSectionFromPath(location.pathname)
-  const [inquiryFilter, setInquiryFilter] = useState('All')
-  const [inquiryPage, setInquiryPage] = useState(1)
   const [compareIds, setCompareIds] = useState([])
 
   const profileQuery = useQuery({ queryKey: dashboardKeys.profile, queryFn: dashboardApi.getProfile })
   const savedProjectsQuery = useQuery({ queryKey: dashboardKeys.savedProjects, queryFn: dashboardApi.getSavedProjects })
   const inquiriesQuery = useQuery({
-    queryKey: dashboardKeys.inquiries(inquiryFilter, inquiryPage),
-    queryFn: () => dashboardApi.getInquiries({ filter: inquiryFilter, page: inquiryPage }),
+    queryKey: dashboardKeys.inquiries('All', 1),
+    queryFn: () => dashboardApi.getInquiries({ filter: 'All', page: 1, pageSize: 50 }),
+    enabled: !!profileQuery.data,
   })
   const quotesQuery = useQuery({ queryKey: dashboardKeys.quotes, queryFn: dashboardApi.getQuotes })
   const settingsQuery = useQuery({ queryKey: dashboardKeys.settings, queryFn: dashboardApi.getSettings })
@@ -775,14 +822,6 @@ export default function Profile() {
     mutationFn: dashboardApi.removeSavedProject,
     onSuccess: () => {
       toast.success('Removed from favorites.')
-      invalidateDashboard()
-    },
-  })
-
-  const deleteInquiryMutation = useMutation({
-    mutationFn: dashboardApi.deleteInquiry,
-    onSuccess: () => {
-      toast.success('Inquiry deleted.')
       invalidateDashboard()
     },
   })
@@ -892,16 +931,15 @@ export default function Profile() {
       )
     }
 
+    if (section === 'saved-properties') {
+      return <SavedPropertiesSection />
+    }
+
     if (section === 'inquiries') {
       if (inquiriesQuery.isLoading) return <LoadingBlock label="Loading inquiries..." />
       return (
         <InquiriesSection
           data={inquiriesQuery.data}
-          filter={inquiryFilter}
-          setFilter={setInquiryFilter}
-          page={inquiryPage}
-          setPage={setInquiryPage}
-          onDelete={(id) => deleteInquiryMutation.mutate(id)}
         />
       )
     }
@@ -934,9 +972,6 @@ export default function Profile() {
   }, [
     avatarMutation,
     compareIds,
-    deleteInquiryMutation,
-    inquiryFilter,
-    inquiryPage,
     inquiriesQuery.data,
     inquiriesQuery.isLoading,
     onLogout,
@@ -1025,7 +1060,7 @@ export default function Profile() {
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-2 py-2 backdrop-blur dark:border-white/10 dark:bg-[#08111e]/95 lg:hidden">
-        <div className="mx-auto grid max-w-3xl grid-cols-6 gap-1">
+        <div className="mx-auto grid max-w-3xl grid-cols-7 gap-1">
           {navItems.map((item) => {
             const Icon = item.icon
             return (

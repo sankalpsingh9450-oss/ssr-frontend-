@@ -1,6 +1,7 @@
 import { SITE, TEAM } from '../constants'
 import AboutHero from '../components/heroes/AboutHero'
 import SectionHeading from '../components/ui/SectionHeading'
+import WhyChooseSection from '../components/WhyChooseSection'
 
 const VALUES = [
   { title: 'Transparency', description: 'Clear advice, practical coordination, and straightforward conversations around costs and project expectations.' },
@@ -60,6 +61,8 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      <WhyChooseSection />
     </>
   )
 }
