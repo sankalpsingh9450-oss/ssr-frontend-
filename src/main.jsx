@@ -8,7 +8,6 @@ import { registerServiceWorker } from './lib/registerServiceWorker'
 import './styles/globals.css'
 
 globalThis.__SSR_ENV__ = import.meta.env
-await globalThis.__SSR_LOCALHOST_BOOTSTRAP__
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,15 +20,21 @@ const queryClient = new QueryClient({
   },
 })
 
-initPerformanceMonitoring()
-registerServiceWorker()
+async function bootstrap() {
+  await Promise.resolve(globalThis.__SSR_LOCALHOST_BOOTSTRAP__)
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>
-)
+  initPerformanceMonitoring()
+  registerServiceWorker()
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </React.StrictMode>
+  )
+}
+
+bootstrap()
