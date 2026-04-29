@@ -26,6 +26,34 @@
 
   <!-- Google Analytics placeholder -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+
+  <script>
+    (function () {
+      var isLocalhost =
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1'
+
+      if (!isLocalhost || !('serviceWorker' in navigator)) return
+
+      window.__SSR_LOCALHOST_BOOTSTRAP__ = (async function () {
+        try {
+          var registrations = await navigator.serviceWorker.getRegistrations()
+          await Promise.all(registrations.map(function (registration) {
+            return registration.unregister()
+          }))
+
+          if ('caches' in window) {
+            var cacheKeys = await caches.keys()
+            await Promise.all(cacheKeys.map(function (key) {
+              return caches.delete(key)
+            }))
+          }
+        } catch (error) {
+          console.warn('Localhost cleanup skipped:', error)
+        }
+      })()
+    })()
+  </script>
 </head>
 <body>
   <div id="root"></div>

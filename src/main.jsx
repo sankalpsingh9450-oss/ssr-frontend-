@@ -8,6 +8,7 @@ import { registerServiceWorker } from './lib/registerServiceWorker'
 import './styles/globals.css'
 
 globalThis.__SSR_ENV__ = import.meta.env
+await globalThis.__SSR_LOCALHOST_BOOTSTRAP__
 
 const queryClient = new QueryClient({
   defaultOptions: {

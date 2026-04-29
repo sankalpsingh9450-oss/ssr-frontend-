@@ -1,5 +1,5 @@
-export function getInputClass(hasError) {
-  return `form-input ${hasError ? 'field-input--error' : ''}`
+export function getInputClass(hasError, extraClassName = '') {
+  return `form-input ${hasError ? 'field-input--error' : ''} ${extraClassName}`.trim()
 }
 
 export function FieldError({ message, id }) {

@@ -1,11 +1,14 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { SERVICES, SITE } from '../constants'
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { SITE } from '../constants'
 import ConstructionCostCalculator from '../components/ConstructionCostCalculator'
 import HomeHero from '../components/heroes/HomeHero'
 import ServiceCard from '../components/ui/ServiceCard'
 import SectionHeading from '../components/ui/SectionHeading'
 import ContactInquiryForm from '../components/forms/ContactInquiryForm'
 import WhyChooseSection from '../components/WhyChooseSection'
+import services from '../services'
 
 const TRUST_STATS = [
   { value: '25+', label: 'Projects' },
@@ -14,6 +17,12 @@ const TRUST_STATS = [
 ]
 
 const CLIENT_LOGOS = ['Apex Build', 'UrbanNest', 'MetroEdge', 'PrimeSquare', 'BlueStone']
+const CAROUSEL_AUTOPLAY_MS = 2000
+
+function getVisibleSlides() {
+  if (typeof window === 'undefined') return 3
+  return window.innerWidth < 768 ? 1 : 3
+}
 
 function StatGrid() {
   return (
@@ -54,12 +63,153 @@ function ClientLogos() {
   )
 }
 
+function ServicesCarousel() {
+  const trackRef = useRef(null)
+  const [visibleSlides, setVisibleSlides] = useState(getVisibleSlides)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const maxIndex = Math.max(services.length - visibleSlides, 0)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleSlides(getVisibleSlides())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    setCurrentIndex((index) => Math.min(index, maxIndex))
+  }, [maxIndex])
+
+  useEffect(() => {
+    if (isHovered || maxIndex === 0) return undefined
+
+    const intervalId = window.setInterval(() => {
+      setCurrentIndex((index) => (index >= maxIndex ? 0 : index + 1))
+    }, CAROUSEL_AUTOPLAY_MS)
+
+    return () => window.clearInterval(intervalId)
+  }, [isHovered, maxIndex])
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const nextSlide = track.children[currentIndex]
+    if (!(nextSlide instanceof HTMLElement)) return
+
+    track.scrollTo({
+      left: nextSlide.offsetLeft,
+      behavior: 'smooth',
+    })
+  }, [currentIndex])
+
+  const goToSlide = (nextIndex) => {
+    setCurrentIndex(nextIndex)
+  }
+
+  const showPrevious = () => {
+    setCurrentIndex((index) => (index <= 0 ? maxIndex : index - 1))
+  }
+
+  const showNext = () => {
+    setCurrentIndex((index) => (index >= maxIndex ? 0 : index + 1))
+  }
+
+  return (
+    <section className="section" id="hero-next">
+      <div className="container">
+        <SectionHeading
+          eyebrow="Services"
+          title="Professional services aligned to construction, civil, and real-estate requirements."
+          description="We help clients plan, build, source, and manage projects with a premium but practical execution mindset."
+        />
+
+        <div
+          className="mt-10"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="mb-6 flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={showPrevious}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d4af37]/40 bg-[#d4af37] text-[#10203a] shadow-lg shadow-[#d4af37]/20 transition-colors duration-200 hover:bg-[#e0bc4b]"
+              aria-label="Previous services"
+            >
+              <FiChevronLeft className="text-xl" />
+            </button>
+            <button
+              type="button"
+              onClick={showNext}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d4af37]/40 bg-[#d4af37] text-[#10203a] shadow-lg shadow-[#d4af37]/20 transition-colors duration-200 hover:bg-[#e0bc4b]"
+              aria-label="Next services"
+            >
+              <FiChevronRight className="text-xl" />
+            </button>
+          </div>
+
+          <div
+            role="region"
+            aria-label="Services carousel"
+            className="overflow-hidden"
+          >
+            <div
+              ref={trackRef}
+              className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {services.map((service, index) => {
+                const isVisible = index >= currentIndex && index < currentIndex + visibleSlides
+
+                return (
+                  <div
+                    key={service.slug}
+                    role={isVisible ? 'group' : undefined}
+                    aria-label={isVisible ? 'Service slide' : undefined}
+                    aria-hidden={!isVisible}
+                    className="w-full shrink-0 snap-start md:w-[calc((100%-3rem)/3)]"
+                  >
+                    <ServiceCard
+                      title={service.title}
+                      description={service.description}
+                      action={{ label: 'Learn More', to: `/services/${service.slug}` }}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-3">
+            {Array.from({ length: maxIndex + 1 }, (_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to services slide ${index + 1}`}
+                aria-pressed={currentIndex === index}
+                className={`h-2.5 rounded-full transition-all duration-300 ${
+                  currentIndex === index ? 'w-8 bg-[#d4af37]' : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Home({ onQuoteClick }) {
   return (
     <>
       <HomeHero onQuoteClick={onQuoteClick} />
 
-      <section className="bg-[#10203a] py-14 sm:py-16" id="hero-next">
+      <ServicesCarousel />
+
+      <section className="bg-[#10203a] py-14 sm:py-16">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -128,27 +278,8 @@ export default function Home({ onQuoteClick }) {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Services"
-            title="Professional services aligned to construction, civil, and real-estate requirements."
-            description="We help clients plan, build, source, and manage projects with a premium but practical execution mindset."
-          />
-          <div className="site-grid-3">
-            {SERVICES.slice(0, 6).map((service) => (
-              <ServiceCard
-                key={service.id}
-                icon={service.icon}
-                title={service.title}
-                description={service.short}
-                image={service.img}
-                action={{ label: 'Learn More', to: '/services' }}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyChooseSection />
+
       <section className="section">
         <div className="container">
           <div className="site-grid-2">
@@ -169,7 +300,7 @@ export default function Home({ onQuoteClick }) {
               </div>
             </div>
 
-            <div className="ui-form-card">
+            <div className="ui-form-card contact-form-shell">
               <h3 className="text-[24px] text-[var(--color-primary)]">Contact Form</h3>
               <p className="mt-2 text-sm text-[var(--color-text-muted)]">Use the form below to send a detailed enquiry to the {SITE.name} team.</p>
               <div className="mt-6">
@@ -179,8 +310,6 @@ export default function Home({ onQuoteClick }) {
           </div>
         </div>
       </section>
-
-      <WhyChooseSection />
     </>
   )
 }

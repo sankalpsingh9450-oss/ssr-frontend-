@@ -1,3 +1,5 @@
+import { FiUsers } from 'react-icons/fi'
+
 export const services = [
   {
     slug: 'residential-construction',
@@ -270,6 +272,45 @@ export const services = [
       closing:
         'We help you make smart real estate investments by combining market insights, verified listings, and expert guidance.',
     },
+  },
+]
+
+export const manpowerServices = [
+  {
+    id: 'civil-engineers',
+    title: 'Civil Engineers',
+    description: 'Qualified civil engineers for planning support, on-site coordination, measurement review, and execution oversight across construction phases.',
+    icon: FiUsers,
+  },
+  {
+    id: 'skilled-labour',
+    title: 'Skilled Labour',
+    description: 'Trained skilled labour teams for masonry, finishing, structural support, and disciplined on-site productivity where workmanship matters.',
+    icon: FiUsers,
+  },
+  {
+    id: 'site-supervisors',
+    title: 'Site Supervisors',
+    description: 'Site supervisors who help maintain daily progress tracking, vendor coordination, workforce management, and execution quality on the ground.',
+    icon: FiUsers,
+  },
+  {
+    id: 'project-managers',
+    title: 'Project Managers',
+    description: 'Project managers for scheduling, milestone control, stakeholder updates, resource planning, and steady delivery across complex construction work.',
+    icon: FiUsers,
+  },
+  {
+    id: 'construction-workers',
+    title: 'Construction Workers',
+    description: 'Reliable construction worker deployment for active projects that require dependable manpower support across core site operations.',
+    icon: FiUsers,
+  },
+  {
+    id: 'technical-staff',
+    title: 'Technical Staff',
+    description: 'Technical staff for documentation, measurement support, project coordination, and technical assistance around site and office workflows.',
+    icon: FiUsers,
   },
 ]
 
