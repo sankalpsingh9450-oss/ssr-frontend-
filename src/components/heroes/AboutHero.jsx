@@ -9,9 +9,9 @@ const milestones = [
 export default function AboutHero({ team }) {
   return (
     <BaseHero
-      title="A premium construction company built on trust, planning, and long-term relationships."
-      subtitle="Learn how SSR Group Civil combines execution capability with client-first advisory."
-      description="Our story is rooted in practical project delivery, transparent coordination, and a commitment to helping clients navigate construction and real-estate decisions with more clarity."
+      title="Premium construction and real-estate guidance built on trust, execution discipline, and long-term credibility."
+      subtitle="With 12+ years of founder-led experience, 25+ projects, and active work across Delhi NCR, SSR Group Civil brings dependable planning, execution, and advisory under one trusted brand."
+      description="We combine construction expertise, project coordination, sourcing support, and practical property guidance to help clients move forward with more confidence, better quality standards, and a more professional delivery experience."
       actions={[
         { label: 'Learn More', href: '#hero-next' },
         { label: 'Meet The Team', href: '#team-section', variant: 'secondary' },

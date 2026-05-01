@@ -100,7 +100,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="ui-form-card" id="contact-form">
+            <div className="ui-form-card contact-form-shell" id="contact-form">
               <h3 className="text-[24px] text-[var(--color-primary)]">Smart Contact Form</h3>
               <p className="mt-2 text-sm text-[var(--color-text-muted)]">
                 Choose your intent first so the form adapts to construction, property, investment, or general enquiries.
@@ -132,12 +132,28 @@ export default function Contact() {
             <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
               <SectionHeading
                 eyebrow="Office Map"
-                title="Office location placeholder"
-                description="We can replace this with a live embedded map or a more exact directions module when needed."
+                title="Visit our Greater Noida West office"
+                description="SSR Group Civil operates from Apex Aura Society, Sector 1, Greater Noida West, making it easy for clients across Noida Extension and Delhi NCR to connect with the team."
                 align="left"
               />
-              <div className="mt-6 flex min-h-[320px] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 text-center text-sm leading-7 text-slate-500">
-                Office map embed placeholder for SSR Group Civil, Greater Noida West.
+              <div className="mt-6 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6">
+                <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#d4af37]">Office Address</p>
+                  <h3 className="mt-3 max-w-xl text-2xl font-bold text-[#1a2540]">
+                    E/207 Apex Aura Society, Sector 1, Greater Noida West
+                  </h3>
+                  <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+                    Use this location for office visits, project meetings, and in-person discussions with the SSR Group Civil team.
+                  </p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-[#1a2540] px-5 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#24345b]"
+                  >
+                    Open in Google Maps
+                  </a>
+                </div>
               </div>
             </div>
           </div>

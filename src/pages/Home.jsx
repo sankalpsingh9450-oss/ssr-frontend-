@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import { SITE } from '../constants'
+import { SERVICES, SITE } from '../constants'
 import ConstructionCostCalculator from '../components/ConstructionCostCalculator'
 import HomeHero from '../components/heroes/HomeHero'
 import ServiceCard from '../components/ui/ServiceCard'
@@ -18,6 +18,12 @@ const TRUST_STATS = [
 
 const CLIENT_LOGOS = ['Apex Build', 'UrbanNest', 'MetroEdge', 'PrimeSquare', 'BlueStone']
 const CAROUSEL_AUTOPLAY_MS = 2000
+const SERVICE_CARD_IMAGE_BY_SLUG = {
+  'residential-construction': SERVICES.find((service) => service.id === 'residential')?.img,
+  'commercial-projects': SERVICES.find((service) => service.id === 'commercial')?.img,
+  'interior-renovation': SERVICES.find((service) => service.id === 'interior')?.img,
+  'investment-advisory': SERVICES.find((service) => service.id === 'property-search')?.img,
+}
 
 function getVisibleSlides() {
   if (typeof window === 'undefined') return 3
@@ -174,6 +180,7 @@ function ServicesCarousel() {
                     <ServiceCard
                       title={service.title}
                       description={service.description}
+                      image={SERVICE_CARD_IMAGE_BY_SLUG[service.slug]}
                       action={{ label: 'Learn More', to: `/services/${service.slug}` }}
                     />
                   </div>
@@ -278,7 +285,7 @@ export default function Home({ onQuoteClick }) {
         </div>
       </section>
 
-      <WhyChooseSection />
+      <WhyChooseSection layout="carousel" />
 
       <section className="section">
         <div className="container">

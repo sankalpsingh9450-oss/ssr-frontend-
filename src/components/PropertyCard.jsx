@@ -1,4 +1,5 @@
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { FiPhoneCall } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { SITE } from '../constants'
 
@@ -61,9 +62,10 @@ Please share more details.`)
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
             href={`tel:${SITE.phoneRaw}`}
-            className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md bg-[#1a2540] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#24345b]"
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[#1a2540] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#24345b]"
           >
-            Call
+            <FiPhoneCall className="shrink-0 text-white" aria-hidden="true" />
+            <span className="text-sm font-semibold text-white">Call</span>
           </a>
           <a
             href={`https://wa.me/${SITE.phoneRaw}?text=${encodedMessage}`}
